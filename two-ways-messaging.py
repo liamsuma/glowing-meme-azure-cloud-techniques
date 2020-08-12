@@ -23,7 +23,7 @@ conSubscription = 'mysubscription'
 # send message to a topic 
 for i in range(5):
     msg = Message('Msg {0}'.format(i).encode('utf-8'))
-    bus_service.send_topic_message(conTop, msg)
+    bus_service.send_topic_message(conTopic, msg)
     
 # receive messages from a subscription 
 msg = bus_service.receive_subscription_message(conTopic, conSubscription)
