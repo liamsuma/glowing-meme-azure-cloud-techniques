@@ -2,7 +2,7 @@
 # Current script is using BlobServiceClient with changes made by Azure since May 2019 and going forward 
 
 import os
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, ContentSettings
 
 try: 
     # Please do not change connect_str unless stated otherwise 
@@ -18,6 +18,8 @@ try:
 
     with open(upload_file_path, 'rb') as data:
         blob_client.upload_blob(data=data)
+        # Or we could change content_type here to ignore Octet Stream 
+        # blob_client.upload_blob(data=data, content_settings=ContentSettings(content_type='application/csv')
 
     
 except Exception as ex:
