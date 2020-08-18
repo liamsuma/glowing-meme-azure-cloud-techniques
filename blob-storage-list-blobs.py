@@ -1,3 +1,5 @@
+# Used to list blobs and looking for files endswith pdf or csv
+
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, PublicAccess
 import os 
 
