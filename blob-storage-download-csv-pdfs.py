@@ -29,6 +29,8 @@ try:
         print("\nDownloading blob to \n\t" + download_file_path)
         with open(download_file_path, 'wb') as download_file:
             download_file.write(blob_client.download_blob().readall())
+            # or we can use readinto() method 
+            # blob_client.download_blob().readinto(download_file)
         
 except Exception as ex:
     print('Exception:')
