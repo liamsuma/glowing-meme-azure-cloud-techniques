@@ -1,6 +1,7 @@
 # Download PDF files as streams and pass them as input directory for other programs  
 
 import os 
+from io import BytesIO # stream processing 
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure.storage.blob import generate_blob_sas, AccountSasPermissions, ResourceTypes
 from urllib.request import urlopen
@@ -28,8 +29,12 @@ try:
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
 
         print("\nDownloading blob to \n\t" + download_file_path)
-        with open(download_file_path, 'wb') as download_file:
-            blob_client.download_blob().readinto(download_file) # download blobs as stream instead of content into local dir 
+        stream_buffer = BytesIO()
+        with stream_buffer as download_stream:
+            blob_client.download_blob(max_concurrency=3).readinto(download_stream)
+            # or we could use built-in properties from Azure 
+            # both ways should work 
+            # blob_client.download_blob(max_concurrency=3).download_to_stream(download_stream)
         
 except Exception as ex:
     print('Exception:')
