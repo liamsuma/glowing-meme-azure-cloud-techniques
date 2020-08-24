@@ -1,6 +1,7 @@
 # Download PDF files as streams and pass them as input directory for other programs  
 
 import os 
+import fitz 
 from io import BytesIO # stream processing 
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure.storage.blob import generate_blob_sas, AccountSasPermissions, ResourceTypes
@@ -35,6 +36,7 @@ try:
             # or we could use built-in properties from Azure 
             # both ways should work 
             # blob_client.download_blob(max_concurrency=3).download_to_stream(download_stream)
+            doc = fitz.open(stream=download_stream, filetype="pdf") # PyMuPDF can take stream as input but requires to specify filetype as another parameter
         
 except Exception as ex:
     print('Exception:')
